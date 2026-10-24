@@ -4,124 +4,61 @@
 #include <utility>
 #include <stdexcept>
 
-Matrix::Matrix() : row_count(0), col_count(0), matrix_data(nullptr) {}
+Matrix::Matrix() : rowCount(0), colCount(0) {}
 
-Matrix::Matrix(const size_t rows, const size_t cols) : row_count(rows), col_count(cols), matrix_data(nullptr)
+Matrix::Matrix(const size_t rows, const size_t cols) : rowCount(rows), colCount(cols)
 {
-    if (row_count > 0 && col_count > 0)
+    if (rowCount > 0 && colCount > 0)
     {
-        matrix_data = new int* [row_count];
-        for (size_t i = 0; i < row_count; ++i)
-        {
-            matrix_data[i] = new int[col_count]();
-        }
+        matrixData.assign(rowCount, std::vector<int>(colCount, 0));
     }
     else
     {
-        row_count = 0;
-        col_count = 0;
+        rowCount = 0;
+        colCount = 0;
     }
 }
 
-Matrix::Matrix(const Matrix& other) : row_count(other.row_count), col_count(other.col_count), matrix_data(nullptr)
-{
-    if (row_count > 0 && col_count > 0)
-    {
-        matrix_data = new int* [row_count];
-        for (size_t i = 0; i < row_count; ++i)
-        {
-            matrix_data[i] = new int[col_count];
-            for (size_t j = 0; j < col_count; ++j)
-            {
-                matrix_data[i][j] = other.matrix_data[i][j];
-            }
-        }
-    }
-}
+size_t Matrix::getRows() const noexcept { return rowCount; }
+size_t Matrix::getColumns() const noexcept { return colCount; }
 
-Matrix::Matrix(Matrix&& other) noexcept : row_count(other.row_count), col_count(other.col_count), matrix_data(other.matrix_data)
+std::vector<int>& Matrix::operator[](const size_t index)
 {
-    other.row_count = 0;
-    other.col_count = 0;
-    other.matrix_data = nullptr;
-}
-
-Matrix::~Matrix()
-{
-    if (matrix_data)
-    {
-        for (size_t i = 0; i < row_count; ++i)
-        {
-            delete[] matrix_data[i];
-        }
-        delete[] matrix_data;
-    }
-}
-
-Matrix& Matrix::operator=(const Matrix& other)
-{
-    if (this != &other)
-    {
-        Matrix temp(other);
-        std::swap(row_count, temp.row_count);
-        std::swap(col_count, temp.col_count);
-        std::swap(matrix_data, temp.matrix_data);
-    }
-    return *this;
-}
-
-Matrix& Matrix::operator=(Matrix&& other) noexcept
-{
-    if (this != &other)
-    {
-        Matrix temp(std::move(other));
-        std::swap(row_count, temp.row_count);
-        std::swap(col_count, temp.col_count);
-        std::swap(matrix_data, temp.matrix_data);
-    }
-    return *this;
-}
-
-size_t Matrix::getRows() const noexcept { return row_count; }
-size_t Matrix::getColumns() const noexcept { return col_count; }
-
-int* Matrix::operator[](const size_t index)
-{
-    if (index >= row_count)
+    if (index >= rowCount)
     {
         throw std::out_of_range("Index out of bounds");
     }
-    return matrix_data[index];
+    return matrixData[index];
 }
 
-const int* Matrix::operator[](const size_t index) const
+const std::vector<int>& Matrix::operator[](const size_t index) const
 {
-    if (index >= row_count)
+    if (index >= rowCount)
     {
         throw std::out_of_range("Index out of bounds");
     }
-    return matrix_data[index];
+    return matrixData[index];
 }
 
 std::string Matrix::toString() const
 {
-    if (row_count == 0 || col_count == 0)
+    if (rowCount == 0 || colCount == 0)
     {
         return "";
     }
 
     std::ostringstream oss;
-    for (size_t i = 0; i < row_count; ++i)
+    for (size_t i = 0; i < rowCount; ++i)
     {
-        for (size_t j = 0; j < col_count; ++j)
+        for (size_t j = 0; j < colCount; ++j)
         {
-            oss << matrix_data[i][j];
-            if (j < col_count - 1)
+            oss << matrixData[i][j];
+            if (j < colCount - 1)
             {
                 oss << " ";
             }
         }
-        if (i < row_count - 1)
+        if (i < rowCount - 1)
         {
             oss << "\n";
         }
@@ -131,21 +68,9 @@ std::string Matrix::toString() const
 
 bool Matrix::operator==(const Matrix& other) const
 {
-    if (row_count != other.row_count || col_count != other.col_count)
-    {
-        return false;
-    }
-    for (size_t i = 0; i < row_count; ++i)
-    {
-        for (size_t j = 0; j < col_count; ++j)
-        {
-            if (matrix_data[i][j] != other.matrix_data[i][j])
-            {
-                return false;
-            }
-        }
-    }
-    return true;
+    return rowCount == other.rowCount &&
+        colCount == other.colCount &&
+        matrixData == other.matrixData;
 }
 
 bool Matrix::operator!=(const Matrix& other) const
@@ -193,73 +118,37 @@ std::istream& operator>>(std::istream& is, Matrix& matrix)
     return is;
 }
 
-void Matrix::insertRowAfter(const size_t index, const int* new_row)
+void Matrix::insertRowAfter(const size_t index, const std::vector<int>& newRow)
 {
-    if (index >= row_count)
+    if (index >= rowCount)
     {
         throw std::out_of_range("Index out of bounds");
     }
-
-    int** expanded_data = new int* [row_count + 1];
-
-    for (size_t i = 0; i <= index; ++i)
-    {
-        expanded_data[i] = matrix_data[i];
-    }
-
-    expanded_data[index + 1] = new int[col_count];
-    for (size_t j = 0; j < col_count; ++j)
-    {
-        expanded_data[index + 1][j] = new_row[j];
-    }
-
-    for (size_t i = index + 1; i < row_count; ++i)
-    {
-        expanded_data[i + 1] = matrix_data[i];
-    }
-
-    delete[] matrix_data;
-    matrix_data = expanded_data;
-    row_count++;
+    matrixData.insert(matrixData.begin() + index + 1, newRow);
+    rowCount++;
 }
 
-void Matrix::insertColumnAfter(const size_t index, const int* new_column)
+void Matrix::insertColumnAfter(const size_t index, const std::vector<int>& newColumn)
 {
-    if (index >= col_count)
+    if (index >= colCount)
     {
         throw std::out_of_range("Index out of bounds");
     }
 
-    for (size_t i = 0; i < row_count; ++i)
+    for (size_t i = 0; i < rowCount; ++i)
     {
-        int* expanded_row = new int[col_count + 1];
-
-        for (size_t j = 0; j <= index; ++j)
-        {
-            expanded_row[j] = matrix_data[i][j];
-        }
-
-        expanded_row[index + 1] = new_column[i];
-
-        for (size_t j = index + 1; j < col_count; ++j)
-        {
-            expanded_row[j + 1] = matrix_data[i][j];
-        }
-
-        delete[] matrix_data[i];
-        matrix_data[i] = expanded_row;
+        matrixData[i].insert(matrixData[i].begin() + index + 1, newColumn[i]);
     }
-
-    col_count++;
+    colCount++;
 }
 
 void Matrix::fillArray(Generator& generator)
 {
-    for (size_t i = 0; i < row_count; ++i)
+    for (size_t i = 0; i < rowCount; ++i)
     {
-        for (size_t j = 0; j < col_count; ++j)
+        for (size_t j = 0; j < colCount; ++j)
         {
-            matrix_data[i][j] = generator.generate();
+            matrixData[i][j] = generator.generate();
         }
     }
 }
