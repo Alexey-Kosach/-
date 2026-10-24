@@ -11,7 +11,7 @@ private:
     /**
      * @brief Значение константы
      */
-    int constant_value;
+    int constantValue;
 
 public:
     /**
