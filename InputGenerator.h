@@ -12,7 +12,7 @@ private:
     /**
      * @brief Ссылка на поток ввода
      */
-    std::istream& input_stream;
+    std::istream& inputStream;
 
 public:
     /**
