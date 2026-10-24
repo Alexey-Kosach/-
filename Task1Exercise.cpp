@@ -1,6 +1,6 @@
 #include "Task1Exercise.h"
 
-Task1Exercise::Task1Exercise(Matrix& src, Generator& gen) : Exercise(src, gen) {}
+Task1Exercise::Task1Exercise(Matrix& src, const Generator& gen) : Exercise(src, gen) {}
 
 Matrix Task1Exercise::solve()
 {
@@ -16,7 +16,7 @@ Matrix Task1Exercise::solve()
     {
         for (size_t j = 0; j < columns; j++)
         {
-            // Åñëè ýëåìåíò íå÷åòíûé - çàìåíÿåì íà 0
+            // Ð•ÑÐ»Ð¸ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð½ÐµÑ‡ÐµÑ‚Ð½Ñ‹Ð¹ - Ð·Ð°Ð¼ÐµÐ½ÑÐµÐ¼ Ð½Ð° 0
             if (result[i][j] % 2 != 0)
             {
                 result[i][j] = 0;
