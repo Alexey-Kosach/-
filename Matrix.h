@@ -1,28 +1,29 @@
 #pragma once
 #include <iosfwd>
 #include <string>
+#include <vector>
 #include "Generator.h"
 
 /**
- * @brief Класс двумерного массива (матрицы)
+ * @brief Класс двумерного массива (матрицы) на основе std::vector
  */
 class Matrix
 {
 private:
     /**
+     * @brief Двумерный вектор для хранения данных
+     */
+    std::vector<std::vector<int>> matrixData;
+
+    /**
      * @brief Количество строк
      */
-    size_t row_count;
+    size_t rowCount;
 
     /**
      * @brief Количество столбцов
      */
-    size_t col_count;
-
-    /**
-     * @brief Указатель на массив указателей (сами данные)
-     */
-    int** matrix_data;
+    size_t colCount;
 
 public:
     /**
@@ -41,32 +42,32 @@ public:
      * @brief Конструктор копирования (глубокое копирование)
      * @param other Ссылка на другую матрицу
      */
-    Matrix(const Matrix& other);
+    Matrix(const Matrix& other) = default;
 
     /**
      * @brief Конструктор перемещения
      * @param other Перемещаемый объект
      */
-    Matrix(Matrix&& other) noexcept;
+    Matrix(Matrix&& other) noexcept = default;
 
     /**
      * @brief Деструктор
      */
-    ~Matrix();
+    ~Matrix() = default;
 
     /**
      * @brief Оператор присваивания копированием
      * @param other Ссылка на другую матрицу
      * @return Ссылка на скопированную матрицу
      */
-    Matrix& operator=(const Matrix& other);
+    Matrix& operator=(const Matrix& other) = default;
 
     /**
      * @brief Оператор присваивания перемещением
      * @param other Перемещаемый объект
      * @return Ссылка на перемещенную матрицу
      */
-    Matrix& operator=(Matrix&& other) noexcept;
+    Matrix& operator=(Matrix&& other) noexcept = default;
 
     /**
      * @brief Перегрузка оператора вывода
@@ -107,16 +108,16 @@ public:
     /**
      * @brief Доступ к строке матрицы (только чтение)
      * @param index Номер строки
-     * @return Указатель на начало строки
+     * @return Константная ссылка на вектор строки
      */
-    const int* operator[](const size_t index) const;
+    const std::vector<int>& operator[](const size_t index) const;
 
     /**
      * @brief Доступ к строке матрицы (чтение и запись)
      * @param index Номер строки
-     * @return Указатель на начало строки
+     * @return Ссылка на вектор строки
      */
-    int* operator[](const size_t index);
+    std::vector<int>& operator[](const size_t index);
 
     /**
      * @brief Получить количество строк
@@ -133,16 +134,16 @@ public:
     /**
      * @brief Вставка новой строки после заданного индекса
      * @param index Индекс, после которого вставляется строка
-     * @param new_row Указатель на массив значений новой строки
+     * @param newRow Вектор значений новой строки
      */
-    void insertRowAfter(const size_t index, const int* new_row);
+    void insertRowAfter(const size_t index, const std::vector<int>& newRow);
 
     /**
      * @brief Вставка нового столбца после заданного индекса
      * @param index Индекс, после которого вставляется столбец
-     * @param new_column Указатель на массив значений нового столбца
+     * @param newColumn Вектор значений нового столбца
      */
-    void insertColumnAfter(const size_t index, const int* new_column);
+    void insertColumnAfter(const size_t index, const std::vector<int>& newColumn);
 
     /**
      * @brief Заполнение матрицы с помощью генератора
