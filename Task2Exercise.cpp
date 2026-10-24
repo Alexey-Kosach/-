@@ -1,6 +1,7 @@
 #include "Task2Exercise.h"
+#include <vector>
 
-Task2Exercise::Task2Exercise(Matrix& src, Generator& gen) : Exercise(src, gen) {}
+Task2Exercise::Task2Exercise(Matrix& src, const Generator& gen) : Exercise(src, gen) {}
 
 Matrix Task2Exercise::solve()
 {
@@ -12,8 +13,8 @@ Matrix Task2Exercise::solve()
         return Matrix();
     }
 
-    // Запоминаем первый столбец
-    int* firstColumn = new int[rows];
+    
+    std::vector<int> firstColumn(rows);
     for (size_t i = 0; i < rows; i++)
     {
         firstColumn[i] = source[i][0];
@@ -21,15 +22,15 @@ Matrix Task2Exercise::solve()
 
     Matrix result(source);
 
-    // Идем справа налево, чтобы вставка не сбивала индексы
+    
     for (size_t j = columns; j > 0; --j)
     {
-        size_t actual_index = j - 1;
+        size_t actualIndex = j - 1;
 
         bool hasZero = false;
         for (size_t i = 0; i < rows; i++)
         {
-            if (result[i][actual_index] == 0)
+            if (result[i][actualIndex] == 0)
             {
                 hasZero = true;
                 break;
@@ -38,11 +39,9 @@ Matrix Task2Exercise::solve()
 
         if (hasZero)
         {
-            result.insertColumnAfter(actual_index, firstColumn);
+            result.insertColumnAfter(actualIndex, firstColumn);
         }
     }
-
-    delete[] firstColumn;
 
     return result;
 }
