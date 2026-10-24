@@ -109,7 +109,7 @@ namespace Tests
             Task1Exercise task(m, dummyGen);
             Matrix result = task.solve();
 
-            // 1 -> 0, 3 -> 0, 5 -> 0. Четные (-4, 2, 0) остаются.
+            // 1 -> 0, 3 -> 0, 5 -> 0. Р§РµС‚РЅС‹Рµ (-4, 2, 0) РѕСЃС‚Р°СЋС‚СЃСЏ.
             Assert::AreEqual(0, result[0][0]);
             Assert::AreEqual(2, result[0][1]);
             Assert::AreEqual(0, result[0][2]);
@@ -133,7 +133,7 @@ namespace Tests
             Matrix result = task.solve();
 
             Assert::AreEqual((size_t)4, result.getColumns());
-            // Второй столбец (индекс 1) содержал 0. После него вставился первый столбец (1, 4).
+            // Р’С‚РѕСЂРѕР№ СЃС‚РѕР»Р±РµС† (РёРЅРґРµРєСЃ 1) СЃРѕРґРµСЂР¶Р°Р» 0. РџРѕСЃР»Рµ РЅРµРіРѕ РІСЃС‚Р°РІРёР»СЃСЏ РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС† (1, 4).
             Assert::AreEqual(1, result[0][2]);
             Assert::AreEqual(4, result[1][2]);
         }
