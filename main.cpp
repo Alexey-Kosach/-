@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <memory>
 
 #include "../Project/Matrix.h"
 #include "../Project/RandomGenerator.h"
@@ -8,8 +9,9 @@
 #include "../Project/Task1Exercise.h"
 #include "../Project/Task2Exercise.h"
 
+
 /**
- * @brief Перечисление для выбора генератора
+ * @brief РџРµСЂРµС‡РёСЃР»РµРЅРёРµ РґР»СЏ РІС‹Р±РѕСЂР° РіРµРЅРµСЂР°С‚РѕСЂР°
  */
 enum class GenType
 {
@@ -19,7 +21,7 @@ enum class GenType
 };
 
 /**
- * @brief Перечисление для выбора задания
+ * @brief РџРµСЂРµС‡РёСЃР»РµРЅРёРµ РґР»СЏ РІС‹Р±РѕСЂР° Р·Р°РґР°РЅРёСЏ
  */
 enum class TaskType
 {
@@ -28,52 +30,50 @@ enum class TaskType
 };
 
 /**
- * @brief Получение положительного числа из консоли
- * @param message Сообщение для вывода
- * @return Введенное число
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРіРѕ С‡РёСЃР»Р° РёР· РєРѕРЅСЃРѕР»Рё
+ * @param message РЎРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РІС‹РІРѕРґР°
+ * @return Р’РІРµРґРµРЅРЅРѕРµ С‡РёСЃР»Рѕ
  */
 size_t getPos(const char* message);
 
 /**
- * @brief Получение целого числа из консоли
- * @param message Сообщение для вывода
- * @return Введенное число
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ С†РµР»РѕРіРѕ С‡РёСЃР»Р° РёР· РєРѕРЅСЃРѕР»Рё
+ * @param message РЎРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РІС‹РІРѕРґР°
+ * @return Р’РІРµРґРµРЅРЅРѕРµ С‡РёСЃР»Рѕ
  */
 int getInt(const char* message);
 
 /**
- * @brief Выбор генератора
- * @param message Сообщение для вывода
- * @return Указатель на созданный генератор
+ * @brief Р’С‹Р±РѕСЂ РіРµРЅРµСЂР°С‚РѕСЂР°
+ * @param message РЎРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РІС‹РІРѕРґР°
+ * @return РЈРјРЅС‹Р№ СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃРѕР·РґР°РЅРЅС‹Р№ РіРµРЅРµСЂР°С‚РѕСЂ
  */
-Generator* chooseGenerator(const char* message);
+std::unique_ptr<Generator> chooseGenerator(const char* message);
 
 /**
- * @brief Запуск выбранного задания
- * @param matrix Ссылка на матрицу
- * @param generator Ссылка на генератор
+ * @brief Р—Р°РїСѓСЃРє РІС‹Р±СЂР°РЅРЅРѕРіРѕ Р·Р°РґР°РЅРёСЏ
+ * @param matrix РЎСЃС‹Р»РєР° РЅР° РјР°С‚СЂРёС†Сѓ
+ * @param generator РЎСЃС‹Р»РєР° РЅР° РіРµРЅРµСЂР°С‚РѕСЂ
  */
 void runTask(Matrix& matrix, Generator& generator);
 
 int main()
 {
-    // Включаем поддержку русского языка в консоли (опционально)
     setlocale(LC_ALL, "Russian");
 
-    const size_t rows = getPos("Введите количество строк:");
-    const size_t columns = getPos("Введите количество столбцов:");
+    const size_t rows = getPos("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє:");
+    const size_t columns = getPos("Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ:");
 
     Matrix matrix(rows, columns);
 
-    Generator* generator = chooseGenerator("Выберите тип заполнения массива:");
+    std::unique_ptr<Generator> generator = chooseGenerator("Р’С‹Р±РµСЂРёС‚Рµ С‚РёРї Р·Р°РїРѕР»РЅРµРЅРёСЏ РјР°СЃСЃРёРІР°:");
     matrix.fillArray(*generator);
 
-    std::cout << "Полученная матрица:\n"
+    std::cout << "РџРѕР»СѓС‡РµРЅРЅР°СЏ РјР°С‚СЂРёС†Р°:\n"
         << matrix.toString() << std::endl;
 
     runTask(matrix, *generator);
 
-    delete generator;
     return 0;
 }
 
@@ -85,7 +85,7 @@ size_t getPos(const char* message)
     {
         return value;
     }
-    std::cerr << "Некорректный ввод (введено не целое положительное число)" << std::endl;
+    std::cerr << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ (РІРІРµРґРµРЅРѕ РЅРµ С†РµР»РѕРµ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ)" << std::endl;
     std::exit(1);
 }
 
@@ -95,16 +95,16 @@ int getInt(const char* message)
     std::cout << message << std::endl;
     if (std::cin >> value)
         return value;
-    std::cerr << "Некорректный ввод (введено не целое число)" << std::endl;
+    std::cerr << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ (РІРІРµРґРµРЅРѕ РЅРµ С†РµР»РѕРµ С‡РёСЃР»Рѕ)" << std::endl;
     std::exit(1);
 }
 
-Generator* chooseGenerator(const char* message)
+std::unique_ptr<Generator> chooseGenerator(const char* message)
 {
     std::cout << message << std::endl;
-    std::cout << static_cast<int>(GenType::Random) << " - случайными числами\n"
-        << static_cast<int>(GenType::Const) << " - одинаковым числом (константой)\n"
-        << static_cast<int>(GenType::Input) << " - ввод с клавиатуры\n"
+    std::cout << static_cast<int>(GenType::Random) << " - СЃР»СѓС‡Р°Р№РЅС‹РјРё С‡РёСЃР»Р°РјРё\n"
+        << static_cast<int>(GenType::Const) << " - РѕРґРёРЅР°РєРѕРІС‹Рј С‡РёСЃР»РѕРј (РєРѕРЅСЃС‚Р°РЅС‚РѕР№)\n"
+        << static_cast<int>(GenType::Input) << " - РІРІРѕРґ СЃ РєР»Р°РІРёР°С‚СѓСЂС‹\n"
         << std::endl;
 
     int var = getInt("");
@@ -112,31 +112,31 @@ Generator* chooseGenerator(const char* message)
     {
     case GenType::Random:
     {
-        int minVal = getInt("Введите минимум диапазона:");
-        int maxVal = getInt("Введите максимум диапазона:");
-        return new RandomGenerator(minVal, maxVal);
+        int minVal = getInt("Р’РІРµРґРёС‚Рµ РјРёРЅРёРјСѓРј РґРёР°РїР°Р·РѕРЅР°:");
+        int maxVal = getInt("Р’РІРµРґРёС‚Рµ РјР°РєСЃРёРјСѓРј РґРёР°РїР°Р·РѕРЅР°:");
+        return std::make_unique<RandomGenerator>(minVal, maxVal);
     }
     case GenType::Const:
     {
-        int value = getInt("Введите значение константы:");
-        return new ConstGenerator(value);
+        int value = getInt("Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёРµ РєРѕРЅСЃС‚Р°РЅС‚С‹:");
+        return std::make_unique<ConstGenerator>(value);
     }
     case GenType::Input:
     {
-        std::cout << "Введите значения массива:\n";
-        return new InputGenerator(std::cin);
+        std::cout << "Р’РІРµРґРёС‚Рµ Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР°:\n";
+        return std::make_unique<InputGenerator>(std::cin);
     }
     default:
-        std::cerr << "Некорректный выбор" << std::endl;
+        std::cerr << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІС‹Р±РѕСЂ" << std::endl;
         std::exit(1);
     }
 }
 
 void runTask(Matrix& matrix, Generator& generator)
 {
-    std::cout << "Выберите задание:\n"
-        << static_cast<int>(TaskType::Task1) << " - Задание 1. Заменить нечётный элемент каждой строки нулем\n"
-        << static_cast<int>(TaskType::Task2) << " - Задание 2. Вставить первый столбец после всех столбцов, содержащих нулевой элемент" << std::endl;
+    std::cout << "Р’С‹Р±РµСЂРёС‚Рµ Р·Р°РґР°РЅРёРµ:\n"
+        << static_cast<int>(TaskType::Task1) << " - Р—Р°РґР°РЅРёРµ 1. Р—Р°РјРµРЅРёС‚СЊ РЅРµС‡С‘С‚РЅС‹Р№ СЌР»РµРјРµРЅС‚ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРё РЅСѓР»РµРј\n"
+        << static_cast<int>(TaskType::Task2) << " - Р—Р°РґР°РЅРёРµ 2. Р’СЃС‚Р°РІРёС‚СЊ РїРµСЂРІС‹Р№ СЃС‚РѕР»Р±РµС† РїРѕСЃР»Рµ РІСЃРµС… СЃС‚РѕР»Р±С†РѕРІ, СЃРѕРґРµСЂР¶Р°С‰РёС… РЅСѓР»РµРІРѕР№ СЌР»РµРјРµРЅС‚" << std::endl;
 
     const int var = getInt("");
 
@@ -146,7 +146,7 @@ void runTask(Matrix& matrix, Generator& generator)
     {
         Task1Exercise task(matrix, generator);
         Matrix result = task.solve();
-        std::cout << "Результат:\n"
+        std::cout << "Р РµР·СѓР»СЊС‚Р°С‚:\n"
             << result.toString() << std::endl;
         break;
     }
@@ -154,12 +154,12 @@ void runTask(Matrix& matrix, Generator& generator)
     {
         Task2Exercise task(matrix, generator);
         Matrix result = task.solve();
-        std::cout << "Результат:\n"
+        std::cout << "Р РµР·СѓР»СЊС‚Р°С‚:\n"
             << result.toString() << std::endl;
         break;
     }
     default:
-        std::cerr << "Некорректный выбор" << std::endl;
+        std::cerr << "РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІС‹Р±РѕСЂ" << std::endl;
         std::exit(1);
     }
 }
