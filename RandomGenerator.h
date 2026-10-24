@@ -11,22 +11,22 @@ private:
     /**
      * @brief Минимальное значение диапазона
      */
-    int min_val;
+    int minVal;
 
     /**
      * @brief Максимальное значение диапазона
      */
-    int max_val;
+    int maxVal;
 
     /**
      * @brief Механизм генерации псевдослучайных чисел
      */
-    std::mt19937 random_engine;
+    std::mt19937 randomEngine;
 
     /**
      * @brief Распределение случайных чисел
      */
-    std::uniform_int_distribution<int> int_distribution;
+    std::uniform_int_distribution<int> intDistribution;
 
 public:
     /**
@@ -34,7 +34,7 @@ public:
      * @param min Минимальное значение
      * @param max Максимальное значение
      */
-    RandomGenerator(int min, int max);
+    RandomGenerator(const int min, const int max);
 
     /**
      * @brief Деструктор
