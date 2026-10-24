@@ -1,0 +1,33 @@
+#pragma once
+#include "Generator.h"
+
+/**
+ * @brief Класс ConstGenerator абстрактного класса Generator.
+ * Всегда возвращает одно и то же заданное значение.
+ */
+class ConstGenerator : public Generator
+{
+private:
+    /**
+     * @brief Значение константы
+     */
+    int constantValue;
+
+public:
+    /**
+     * @brief Конструктор
+     * @param value Значение, которое будет всегда возвращаться
+     */
+    explicit ConstGenerator(const int value);
+
+    /**
+     * @brief Деструктор
+     */
+    ~ConstGenerator() override = default;
+
+    /**
+     * @brief Генерация значения
+     * @return Константное значение
+     */
+    int generate() override;
+};
