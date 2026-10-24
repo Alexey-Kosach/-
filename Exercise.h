@@ -14,9 +14,9 @@ protected:
     Matrix& source;
 
     /**
-     * @brief Ссылка на генератор значений
+     * @brief Ссылка на генератор значений (константная)
      */
-    Generator& generator;
+    const Generator& generator;
 
 public:
     /**
@@ -24,7 +24,7 @@ public:
      * @param src Ссылка на исходную матрицу
      * @param gen Ссылка на генератор
      */
-    Exercise(Matrix& src, Generator& gen);
+    Exercise(Matrix& src, const Generator& gen);
 
     /**
      * @brief Виртуальный деструктор
