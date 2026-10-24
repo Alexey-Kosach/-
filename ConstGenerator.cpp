@@ -1,8 +1,8 @@
 #include "ConstGenerator.h"
 
-ConstGenerator::ConstGenerator(int value) : constant_value(value) {}
+ConstGenerator::ConstGenerator(const int value) : constantValue(value) {}
 
 int ConstGenerator::generate()
 {
-    return this->constant_value;
+    return this->constantValue;
 }
