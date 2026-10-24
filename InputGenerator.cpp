@@ -1,11 +1,11 @@
 #include "InputGenerator.h"
 #include <iostream>
 
-InputGenerator::InputGenerator(std::istream& input) : input_stream(input) {}
+InputGenerator::InputGenerator(std::istream& input) : inputStream(input) {}
 
 int InputGenerator::generate()
 {
     int value = 0;
-    this->input_stream >> value;
+    this->inputStream >> value;
     return value;
 }
