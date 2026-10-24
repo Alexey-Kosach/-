@@ -1,20 +1,20 @@
 #include "RandomGenerator.h"
 #include <utility>
 
-RandomGenerator::RandomGenerator(int min, int max)
-    : min_val(min),
-    max_val(max),
-    random_engine(std::random_device{}()),
-    int_distribution(0, 0)
+RandomGenerator::RandomGenerator(const int min, const int max)
+    : minVal(min),
+    maxVal(max),
+    randomEngine(std::random_device{}()),
+    intDistribution(0, 0)
 {
-    if (min_val > max_val)
+    if (minVal > maxVal)
     {
-        std::swap(min_val, max_val);
+        std::swap(minVal, maxVal);
     }
-    int_distribution = std::uniform_int_distribution<int>(min_val, max_val);
+    intDistribution = std::uniform_int_distribution<int>(minVal, maxVal);
 }
 
 int RandomGenerator::generate()
 {
-    return int_distribution(random_engine);
+    return intDistribution(randomEngine);
 }
