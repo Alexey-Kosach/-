@@ -3,15 +3,12 @@
 #include <memory>
 #include <windows.h>
 
-#include "../Project/Matrix.h"
-#include "../Project/RandomGenerator.h"
-#include "../Project/ConstGenerator.h"
-#include "../Project/InputGenerator.h"
-#include "../Project/Task1Exercise.h"
-#include "../Project/Task2Exercise.h"
-
-
-
+#include "Matrix.h"
+#include "RandomGenerator.h"
+#include "ConstGenerator.h"
+#include "InputGenerator.h"
+#include "Task1Exercise.h"
+#include "Task2Exercise.h"
 
 /**
  * @brief Перечисление для выбора типа генератора
@@ -66,7 +63,7 @@ void runTask(Matrix &matrix, const Generator &generator);
  */
 int main()
 {
-    // Настройка кодировки для корректного отображения русского языка в консоли
+    
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
@@ -76,17 +73,17 @@ int main()
 
     Matrix matrix(rows, columns);
 
-    // Создаем умный указатель. Он автоматически управляет памятью (delete не нужен).
+    
     std::unique_ptr<Generator> generator = chooseGenerator("Выберите тип заполнения массива:");
     
-    // ПРОВЕРКА: убеждаемся, что указатель не пустой (не nullptr) перед использованием
+   
     if (!generator) 
     {
         std::cerr << "Ошибка: генератор не был создан (указатель пуст)!" << std::endl;
         return 1;
     }
 
-    // Передаем объект по ссылке, разыменовывая указатель
+    
     matrix.fillArray(*generator);
 
     std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
@@ -105,7 +102,7 @@ size_t getPos(const char *message)
         return value;
     }
     
-    std::cerr << "Некорректный" << std::endl;
+    std::cerr << "Некорректный ввод" << std::endl;
     std::exit(1); 
     
     
