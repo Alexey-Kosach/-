@@ -76,7 +76,7 @@ int main()
     
     std::unique_ptr<Generator> generator = chooseGenerator("Выберите тип заполнения массива:");
     
-   
+    
     if (!generator) 
     {
         std::cerr << "Ошибка: генератор не был создан (указатель пуст)!" << std::endl;
