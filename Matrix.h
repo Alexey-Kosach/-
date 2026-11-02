@@ -42,13 +42,13 @@ public:
      * @brief Конструктор копирования (глубокое копирование)
      * @param other Ссылка на другую матрицу
      */
-    Matrix(const Matrix& other) = default;
+    Matrix(const Matrix &other) = default;
 
     /**
      * @brief Конструктор перемещения
      * @param other Перемещаемый объект
      */
-    Matrix(Matrix&& other) noexcept = default;
+    Matrix(Matrix &&other) noexcept = default;
 
     /**
      * @brief Деструктор
@@ -60,14 +60,14 @@ public:
      * @param other Ссылка на другую матрицу
      * @return Ссылка на скопированную матрицу
      */
-    Matrix& operator=(const Matrix& other) = default;
+    Matrix &operator=(const Matrix &other) = default;
 
     /**
      * @brief Оператор присваивания перемещением
      * @param other Перемещаемый объект
      * @return Ссылка на перемещенную матрицу
      */
-    Matrix& operator=(Matrix&& other) noexcept = default;
+    Matrix &operator=(Matrix &&other) noexcept = default;
 
     /**
      * @brief Перегрузка оператора вывода
@@ -75,7 +75,7 @@ public:
      * @param matrix Матрица для вывода
      * @return Перегруженный поток вывода
      */
-    friend std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 
     /**
      * @brief Перегрузка оператора ввода
@@ -83,21 +83,21 @@ public:
      * @param matrix Матрица для ввода
      * @return Перегруженный поток ввода
      */
-    friend std::istream& operator>>(std::istream& is, Matrix& matrix);
+    friend std::istream &operator>>(std::istream &is, Matrix &matrix);
 
     /**
      * @brief Оператор проверки на равенство
      * @param other Ссылка на другую матрицу
      * @return true - если матрицы равны, иначе false
      */
-    bool operator==(const Matrix& other) const;
+    bool operator==(const Matrix &other) const;
 
     /**
      * @brief Оператор проверки на неравенство
      * @param other Ссылка на другую матрицу
      * @return true - если матрицы не равны, иначе false
      */
-    bool operator!=(const Matrix& other) const;
+    bool operator!=(const Matrix &other) const;
 
     /**
      * @brief Преобразование матрицы в строку
@@ -110,14 +110,14 @@ public:
      * @param index Номер строки
      * @return Константная ссылка на вектор строки
      */
-    const std::vector<int>& operator[](const size_t index) const;
+    const std::vector<int> &operator[](const size_t index) const;
 
     /**
      * @brief Доступ к строке матрицы (чтение и запись)
      * @param index Номер строки
      * @return Ссылка на вектор строки
      */
-    std::vector<int>& operator[](const size_t index);
+    std::vector<int> &operator[](const size_t index);
 
     /**
      * @brief Получить количество строк
@@ -136,18 +136,18 @@ public:
      * @param index Индекс, после которого вставляется строка
      * @param newRow Вектор значений новой строки
      */
-    void insertRowAfter(const size_t index, const std::vector<int>& newRow);
+    void insertRowAfter(const size_t index, const std::vector<int> &newRow);
 
     /**
      * @brief Вставка нового столбца после заданного индекса
      * @param index Индекс, после которого вставляется столбец
      * @param newColumn Вектор значений нового столбца
      */
-    void insertColumnAfter(const size_t index, const std::vector<int>& newColumn);
+    void insertColumnAfter(const size_t index, const std::vector<int> &newColumn);
 
     /**
      * @brief Заполнение матрицы с помощью генератора
      * @param generator Ссылка на генератор значений
      */
-    void fillArray(Generator& generator);
+    void fillArray(const Generator &generator);
 };
