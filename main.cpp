@@ -97,19 +97,14 @@ size_t getPos(const char *message)
 {
     size_t value = 0;
     std::cout << message << std::endl;
-    
-    if (std::cin >> value && value > 0) 
+    if (!(std::cin >> value) || value == 0) 
     {
-        return value;
+        std::cerr << "Некорректный ввод" << std::endl;
+        std::exit(1);
     }
     
-    std::cerr << "Некорректный ввод" << std::endl;
-    std::exit(1); 
-    
- 
-    return 0; 
+    return value; 
 }
-
 int getInt(const char *message)
 {
     int value = 0;
