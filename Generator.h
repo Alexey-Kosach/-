@@ -1,7 +1,7 @@
 #pragma once
 
 /**
- * @brief Абстрактный класс Generator для генерации значений
+ * @brief Абстрактный базовый класс для всех генераторов значений
  */
 class Generator
 {
@@ -15,5 +15,5 @@ public:
      * @brief Виртуальный метод генерации значения
      * @return Сгенерированное целочисленное значение
      */
-    virtual int generate() = 0;
+    virtual int generate() const = 0;
 };
