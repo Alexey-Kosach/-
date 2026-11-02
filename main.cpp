@@ -11,59 +11,45 @@
 #include "Task2Exercise.h"
 
 /**
- * @brief Перечисление для выбора типа генератора
+ * @brief Перечисление для выбора генератора
  */
-enum class GenType 
-{ 
-    Random = 1, 
-    Const, 
-    Input 
-};
+enum class GenType { Random = 1, Const, Input };
 
 /**
- * @brief Перечисление для выбора типа задания
+ * @brief Перечисление для выбора задания
  */
-enum class TaskType 
-{ 
-    Task1 = 1, 
-    Task2 
-};
+enum class TaskType { Task1 = 1, Task2 };
 
 /**
  * @brief Получение положительного числа из консоли
- * @param message Сообщение для вывода пользователю
- * @return Введенное положительное число
+ * @param message Сообщение для вывода
+ * @return Введенное число
  */
 size_t getPos(const char *message);
 
 /**
  * @brief Получение целого числа из консоли
- * @param message Сообщение для вывода пользователю
- * @return Введенное целое число
+ * @param message Сообщение для вывода
+ * @return Введенное число
  */
 int getInt(const char *message);
 
 /**
- * @brief Выбор и создание конкретного генератора
- * @param message Сообщение для вывода пользователю
- * @return Умный указатель на созданный генератор (никогда не nullptr при успехе)
+ * @brief Выбор генератора
+ * @param message Сообщение для вывода
+ * @return Умный указатель на созданный генератор
  */
 std::unique_ptr<Generator> chooseGenerator(const char *message); 
 
 /**
  * @brief Запуск выбранного задания
  * @param matrix Ссылка на матрицу
- * @param generator Константная ссылка на генератор
+ * @param generator Ссылка на генератор
  */
 void runTask(Matrix &matrix, const Generator &generator);
 
-/**
- * @brief Точка входа в программу
- * @return 0 при успешном завершении, 1 при ошибке
- */
 int main()
 {
-    
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
@@ -75,15 +61,14 @@ int main()
 
     
     std::unique_ptr<Generator> generator = chooseGenerator("Выберите тип заполнения массива:");
+
     
-    
-    if (!generator) 
+    if (generator == nullptr) 
     {
-        std::cerr << "Ошибка: генератор не был создан (указатель пуст)!" << std::endl;
+        std::cerr << "Ошибка: указатель на генератор пуст!" << std::endl;
         return 1;
     }
 
-    
     matrix.fillArray(*generator);
 
     std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
@@ -97,6 +82,8 @@ size_t getPos(const char *message)
 {
     size_t value = 0;
     std::cout << message << std::endl;
+    
+    
     if (!(std::cin >> value) || value == 0) 
     {
         std::cerr << "Некорректный ввод" << std::endl;
@@ -105,17 +92,19 @@ size_t getPos(const char *message)
     
     return value; 
 }
+
 int getInt(const char *message)
 {
     int value = 0;
     std::cout << message << std::endl;
-    if (std::cin >> value) 
-    {
-        return value;
-    }
     
-    std::cerr << "Некорректный ввод" << std::endl;
-    std::exit(1);
+    
+    if (!(std::cin >> value)) 
+    {
+        std::cerr << "Некорректный ввод" << std::endl;
+        std::exit(1);
+    }
+    return value;
 }
 
 std::unique_ptr<Generator> chooseGenerator(const char *message)
