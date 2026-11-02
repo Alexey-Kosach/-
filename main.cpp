@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstdlib>
-#include <memory>
 #include <windows.h>
 
 #include "Matrix.h"
@@ -35,11 +34,11 @@ size_t getPos(const char *message);
 int getInt(const char *message);
 
 /**
- * @brief Выбор генератора
+ * @brief Выбор типа генератора (возвращает выбранный вариант)
  * @param message Сообщение для вывода
- * @return Умный указатель на созданный генератор
+ * @return Выбранный тип генератора
  */
-std::unique_ptr<Generator> chooseGenerator(const char *message); 
+GenType chooseGeneratorType(const char *message);
 
 /**
  * @brief Запуск выбранного задания
@@ -59,21 +58,40 @@ int main()
 
     Matrix matrix(rows, columns);
 
-    
-    std::unique_ptr<Generator> generator = chooseGenerator("Выберите тип заполнения массива:");
+    // Выбираем тип генератора (без указателей и без unique_ptr)
+    GenType genType = chooseGeneratorType("Выберите тип заполнения массива:");
 
-    
-    if (generator == nullptr) 
+    // Проверка, что выбор корректен (не пустой)
+    if (genType == GenType::Random)
     {
-        std::cerr << "Ошибка: указатель на генератор пуст!" << std::endl;
+        int minVal = getInt("Введите минимум диапазона:");
+        int maxVal = getInt("Введите максимум диапазона:");
+        RandomGenerator generator(minVal, maxVal);
+        matrix.fillArray(generator);
+        std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
+        runTask(matrix, generator);
+    }
+    else if (genType == GenType::Const)
+    {
+        int value = getInt("Введите значение константы:");
+        ConstGenerator generator(value);
+        matrix.fillArray(generator);
+        std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
+        runTask(matrix, generator);
+    }
+    else if (genType == GenType::Input)
+    {
+        std::cout << "Введите значения массива:\n";
+        InputGenerator generator(std::cin);
+        matrix.fillArray(generator);
+        std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
+        runTask(matrix, generator);
+    }
+    else
+    {
+        std::cerr << "Ошибка: некорректный тип генератора!" << std::endl;
         return 1;
     }
-
-    matrix.fillArray(*generator);
-
-    std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
-
-    runTask(matrix, *generator);
 
     return 0; 
 }
@@ -83,7 +101,7 @@ size_t getPos(const char *message)
     size_t value = 0;
     std::cout << message << std::endl;
     
-    
+    // Проверка, что ввод не пустой и число > 0
     if (!(std::cin >> value) || value == 0) 
     {
         std::cerr << "Некорректный ввод" << std::endl;
@@ -98,7 +116,7 @@ int getInt(const char *message)
     int value = 0;
     std::cout << message << std::endl;
     
-    
+    // Проверка, что ввод не пустой
     if (!(std::cin >> value)) 
     {
         std::cerr << "Некорректный ввод" << std::endl;
@@ -107,7 +125,7 @@ int getInt(const char *message)
     return value;
 }
 
-std::unique_ptr<Generator> chooseGenerator(const char *message)
+GenType chooseGeneratorType(const char *message)
 {
     std::cout << message << std::endl;
     std::cout << static_cast<int>(GenType::Random) << " - случайными числами\n"
@@ -115,28 +133,15 @@ std::unique_ptr<Generator> chooseGenerator(const char *message)
               << static_cast<int>(GenType::Input) << " - ввод с клавиатуры\n" << std::endl;
               
     int var = getInt("");
-    switch (static_cast<GenType>(var))
+    
+    // Проверка, что введен допустимый вариант
+    if (var < 1 || var > 3) 
     {
-    case GenType::Random:
-    {
-        int minVal = getInt("Введите минимум диапазона:");
-        int maxVal = getInt("Введите максимум диапазона:");
-        return std::make_unique<RandomGenerator>(minVal, maxVal); 
-    }
-    case GenType::Const:
-    {
-        int value = getInt("Введите значение константы:");
-        return std::make_unique<ConstGenerator>(value);
-    }
-    case GenType::Input:
-    {
-        std::cout << "Введите значения массива:\n";
-        return std::make_unique<InputGenerator>(std::cin);
-    }
-    default:
-        std::cerr << "Некорректный выбор" << std::endl;
+        std::cerr << "Ошибка: выбран недопустимый вариант!" << std::endl;
         std::exit(1);
     }
+
+    return static_cast<GenType>(var);
 }
 
 void runTask(Matrix &matrix, const Generator &generator)
