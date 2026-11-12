@@ -1,6 +1,7 @@
 #include "Task1Exercise.h"
 
-Task1Exercise::Task1Exercise(Matrix& src, const Generator& gen) : Exercise(src, gen) {}
+// Убран параметр Generator
+Task1Exercise::Task1Exercise(Matrix &src) : Exercise(src) {}
 
 Matrix Task1Exercise::solve()
 {
@@ -16,7 +17,6 @@ Matrix Task1Exercise::solve()
     {
         for (size_t j = 0; j < columns; j++)
         {
-            // Если элемент нечетный - заменяем на 0
             if (result[i][j] % 2 != 0)
             {
                 result[i][j] = 0;
