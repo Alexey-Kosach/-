@@ -101,9 +101,31 @@ void Matrix::insertColumnAfter(const size_t index, const std::vector<int> &newCo
     colCount++;
 }
 
-// Метод заполнения остался здесь. 
-// Теперь main вызывает matrix.fillArray(generator)
-void Matrix::fillArray(Generator &generator)
+// Реализация перегрузок для каждого типа генератора
+
+void Matrix::fillArray(RandomGenerator &generator)
+{
+    for (size_t i = 0; i < rowCount; ++i)
+    {
+        for (size_t j = 0; j < colCount; ++j)
+        {
+            matrixData[i][j] = generator.generate();
+        }
+    }
+}
+
+void Matrix::fillArray(ConstGenerator &generator)
+{
+    for (size_t i = 0; i < rowCount; ++i)
+    {
+        for (size_t j = 0; j < colCount; ++j)
+        {
+            matrixData[i][j] = generator.generate();
+        }
+    }
+}
+
+void Matrix::fillArray(InputGenerator &generator)
 {
     for (size_t i = 0; i < rowCount; ++i)
     {
