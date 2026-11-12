@@ -34,7 +34,7 @@ size_t getPos(const char *message);
 int getInt(const char *message);
 
 /**
- * @brief Выбор типа генератора (возвращает выбранный вариант)
+ * @brief Выбор типа генератора
  * @param message Сообщение для вывода
  * @return Выбранный тип генератора
  */
@@ -49,6 +49,7 @@ void runTask(Matrix &matrix, const Generator &generator);
 
 int main()
 {
+    
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "Russian");
@@ -58,16 +59,16 @@ int main()
 
     Matrix matrix(rows, columns);
 
-    // Выбираем тип генератора (без указателей и без unique_ptr)
+    
     GenType genType = chooseGeneratorType("Выберите тип заполнения массива:");
 
-    // Проверка, что выбор корректен (не пустой)
     if (genType == GenType::Random)
     {
         int minVal = getInt("Введите минимум диапазона:");
         int maxVal = getInt("Введите максимум диапазона:");
         RandomGenerator generator(minVal, maxVal);
         matrix.fillArray(generator);
+        
         std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
         runTask(matrix, generator);
     }
@@ -76,6 +77,7 @@ int main()
         int value = getInt("Введите значение константы:");
         ConstGenerator generator(value);
         matrix.fillArray(generator);
+        
         std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
         runTask(matrix, generator);
     }
@@ -84,11 +86,13 @@ int main()
         std::cout << "Введите значения массива:\n";
         InputGenerator generator(std::cin);
         matrix.fillArray(generator);
+        
         std::cout << "Полученная матрица:\n" << matrix.toString() << std::endl;
         runTask(matrix, generator);
     }
     else
     {
+        
         std::cerr << "Ошибка: некорректный тип генератора!" << std::endl;
         return 1;
     }
@@ -98,10 +102,17 @@ int main()
 
 size_t getPos(const char *message)
 {
+    // указатель на строку не пустой
+    if (message == nullptr) 
+    {
+        std::cerr << "Ошибка: пустое сообщение!" << std::endl;
+        std::exit(1);
+    }
+
     size_t value = 0;
     std::cout << message << std::endl;
     
-    // Проверка, что ввод не пустой и число > 0
+    // ввод успешен и значение больше нуля
     if (!(std::cin >> value) || value == 0) 
     {
         std::cerr << "Некорректный ввод" << std::endl;
@@ -113,10 +124,17 @@ size_t getPos(const char *message)
 
 int getInt(const char *message)
 {
+    // указатель на строку не пустой
+    if (message == nullptr) 
+    {
+        std::cerr << "Ошибка: пустое сообщение!" << std::endl;
+        std::exit(1);
+    }
+
     int value = 0;
     std::cout << message << std::endl;
     
-    // Проверка, что ввод не пустой
+    // ввод успешен
     if (!(std::cin >> value)) 
     {
         std::cerr << "Некорректный ввод" << std::endl;
@@ -127,6 +145,13 @@ int getInt(const char *message)
 
 GenType chooseGeneratorType(const char *message)
 {
+    // указатель на строку не пустой
+    if (message == nullptr) 
+    {
+        std::cerr << "Ошибка: пустое сообщение!" << std::endl;
+        std::exit(1);
+    }
+
     std::cout << message << std::endl;
     std::cout << static_cast<int>(GenType::Random) << " - случайными числами\n"
               << static_cast<int>(GenType::Const) << " - константой\n"
@@ -134,7 +159,7 @@ GenType chooseGeneratorType(const char *message)
               
     int var = getInt("");
     
-    // Проверка, что введен допустимый вариант
+    // выбран допустимый вариант
     if (var < 1 || var > 3) 
     {
         std::cerr << "Ошибка: выбран недопустимый вариант!" << std::endl;
