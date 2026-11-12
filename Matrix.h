@@ -3,26 +3,15 @@
 #include <string>
 #include <vector>
 #include "Generator.h"
+#include "RandomGenerator.h"
+#include "ConstGenerator.h"
+#include "InputGenerator.h"
 
-/**
- * @brief Класс двумерного массива (матрицы) на основе std::vector
- */
 class Matrix
 {
 private:
-    /**
-     * @brief Двумерный вектор для хранения данных
-     */
     std::vector<std::vector<int>> matrixData;
-
-    /**
-     * @brief Количество строк
-     */
     size_t rowCount;
-
-    /**
-     * @brief Количество столбцов
-     */
     size_t colCount;
 
 public:
@@ -52,10 +41,8 @@ public:
     void insertRowAfter(const size_t index, const std::vector<int> &newRow);
     void insertColumnAfter(const size_t index, const std::vector<int> &newColumn);
 
-    /**
-     * @brief Заполнение матрицы с помощью генератора
-     * @param generator Ссылка на генератор значений
-     */
-    // Метод заполнения остался в классе Matrix, 
-    void fillArray(Generator &generator); 
+   
+    void fillArray(RandomGenerator &generator);
+    void fillArray(ConstGenerator &generator);
+    void fillArray(InputGenerator &generator);
 };
