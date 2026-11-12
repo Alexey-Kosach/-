@@ -11,17 +11,17 @@ public:
     /**
      * @brief Конструктор
      * @param src Ссылка на матрицу
-     * @param gen Ссылка на генератор
      */
-    Task1Exercise(Matrix &src, const Generator &gen);
+    // Убран параметр Generator
+    Task1Exercise(Matrix &src);
 
     /**
-     * @brief Деструктор
+     * @brief Деструктор (переопределен)
      */
     ~Task1Exercise() override = default;
 
     /**
-     * @brief Выполнить задание
+     * @brief Выполнить задание (переопределен)
      * @return Матрица с замененными нечетными элементами
      */
     Matrix solve() override;
