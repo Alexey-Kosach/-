@@ -1,7 +1,8 @@
 #include "Task2Exercise.h"
 #include <vector>
 
-Task2Exercise::Task2Exercise(Matrix& src, const Generator& gen) : Exercise(src, gen) {}
+// Убран параметр Generator
+Task2Exercise::Task2Exercise(Matrix &src) : Exercise(src) {}
 
 Matrix Task2Exercise::solve()
 {
@@ -13,7 +14,6 @@ Matrix Task2Exercise::solve()
         return Matrix();
     }
 
-    
     std::vector<int> firstColumn(rows);
     for (size_t i = 0; i < rows; i++)
     {
@@ -22,7 +22,6 @@ Matrix Task2Exercise::solve()
 
     Matrix result(source);
 
-    
     for (size_t j = columns; j > 0; --j)
     {
         size_t actualIndex = j - 1;
