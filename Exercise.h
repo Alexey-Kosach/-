@@ -29,11 +29,11 @@ public:
     /**
      * @brief Виртуальный деструктор
      */
-    virtual ~Exercise() = default;
+    virtual ~Exercise() = default; 
 
     /**
      * @brief Виртуальный метод решения задания
      * @return Новая матрица - результат решения
      */
-    virtual Matrix solve() = 0;
+    virtual Matrix solve() = 0; 
 };
