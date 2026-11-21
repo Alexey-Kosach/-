@@ -17,5 +17,5 @@ const std::string& Person::getName() const noexcept { return name; }
 
 std::string Person::getInfo() const
 {
-    return "ID: " + std::to_string(id) + "\n   ‘»Œ: " + name;
+    return "ID: " + std::to_string(id) + "\n   –§–ò–û: " + name;
 }
