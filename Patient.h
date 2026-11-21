@@ -6,7 +6,7 @@
 #include <string>
 
 /**
- * @brief Класс Patient - пациент (наследник Person)
+ * @brief РљР»Р°СЃСЃ Patient - РїР°С†РёРµРЅС‚
  */
 class Patient : public Person
 {
