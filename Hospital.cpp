@@ -1,122 +1,55 @@
-#include "Hospital.h"
-#include <iostream>
-#include <algorithm>
+#pragma once
 
-bool Hospital::containsId(const int id) const
+#include "Person.h"
+#include "MedicalWorker.h"
+#include "Patient.h"
+#include "Ward.h"
+#include "Specialization.h"
+#include <vector>
+#include <string>
+
+/**
+ * @brief –ö–ª–∞—Å—Å Hospital - –±–æ–ª—å–Ω–∏—Ü–∞
+ */
+class Hospital
 {
-    bool inWorkers = std::any_of(workers.begin(), workers.end(),
-        [id](const MedicalWorker& w) { return w.getId() == id; });
-    if (inWorkers) return true;
+private:
+    std::vector<Person> persons;
+    std::vector<MedicalWorker> workers;
+    std::vector<Patient> patients;
+    std::vector<Ward> wards;
+    std::vector<Specialization> specializations;
 
-    bool inPatients = std::any_of(patients.begin(), patients.end(),
-        [id](const Patient& p) { return p.getId() == id; });
-    if (inPatients) return true;
+    bool containsId(const int id) const;
 
-    return std::any_of(persons.begin(), persons.end(),
-        [id](const Person& p) { return p.getId() == id; });
-}
+public:
+    Hospital() = default;
+    ~Hospital() = default;
 
-void Hospital::addPerson(const Person& person)
-{
-    if (containsId(person.getId())) return;
-    persons.push_back(person);
-}
+    void addPerson(const Person &person);
+    void addWorker(const MedicalWorker &worker);
+    void addPatient(const Patient &patient);
+    void addWard(const Ward &ward);
+    void addSpecialization(const Specialization &specialization);
 
-void Hospital::addWorker(const MedicalWorker& worker)
-{
-    if (containsId(worker.getId())) return;
-    workers.push_back(worker);
-}
+    const std::vector<Person> &getPersons() const noexcept;
+    const std::vector<MedicalWorker> &getWorkers() const noexcept;
+    const std::vector<Patient> &getPatients() const noexcept;
+    const std::vector<Ward> &getWards() const noexcept;
+    const std::vector<Specialization> &getSpecializations() const noexcept;
 
-void Hospital::addPatient(const Patient& patient)
-{
-    if (containsId(patient.getId())) return;
-    patients.push_back(patient);
-}
+    /** –°–≤–µ–¥–µ–Ω–∏—è –æ –º–µ–¥–∏—Ü–∏–Ω—Å–∫–∏—Ö —Ä–∞–±–æ—Ç–Ω–∏–∫–∞—Ö */
+    void printWorkers() const;
 
-void Hospital::addWard(const Ward& ward)
-{
-    auto it = std::find_if(wards.begin(), wards.end(),
-        [&ward](const Ward& w) { return w.getNumber() == ward.getNumber(); });
-    if (it != wards.end()) return;
-    wards.push_back(ward);
-}
+    /** –°–≤–µ–¥–µ–Ω–∏—è –æ –º–µ–¥—Ä–∞–±–æ—Ç–Ω–∏–∫–∞—Ö, –Ω–∞–±–ª—é–¥–∞—é—â–∏—Ö –∑–∞ –ø–∞—Ü–∏–µ–Ω—Ç–æ–º */
+    void printWorkersForPatient(const std::string &patientName) const;
 
-void Hospital::addSpecialization(const Specialization& spec)
-{
-    auto it = std::find_if(specializations.begin(), specializations.end(),
-        [&spec](const Specialization& s) { return s.getTitle() == spec.getTitle(); });
-    if (it != specializations.end()) return;
-    specializations.push_back(spec);
-}
+    /** –°–≤–µ–¥–µ–Ω–∏—è –æ –ø–∞—Ü–∏–µ–Ω—Ç–∞—Ö */
+    void printPatients() const;
 
-const std::vector<Person>& Hospital::getPersons() const noexcept { return persons; }
-const std::vector<MedicalWorker>& Hospital::getWorkers() const noexcept { return workers; }
-const std::vector<Patient>& Hospital::getPatients() const noexcept { return patients; }
-const std::vector<Ward>& Hospital::getWards() const noexcept { return wards; }
-const std::vector<Specialization>& Hospital::getSpecializations() const noexcept { return specializations; }
+    /** –°–≤–µ–¥–µ–Ω–∏—è –æ –ø–∞—Ü–∏–µ–Ω—Ç–∞—Ö —É –æ–ø—Ä–µ–¥–µ–ª—ë–Ω–Ω–æ–≥–æ –º–µ–¥—Ä–∞–±–æ—Ç–Ω–∏–∫–∞ */
+    void printPatientsForWorker(const std::string &workerName) const;
 
-void Hospital::printWorkers() const
-{
-    std::cout << "=== ÃÂ‰ËˆËÌÒÍËÂ ‡·ÓÚÌËÍË ===" << std::endl;
-    for (const MedicalWorker& w : workers)
-        std::cout << w.getInfo() << "\n" << std::endl;
-}
-
-void Hospital::printWorkersForPatient(const std::string& patientName) const
-{
-    std::cout << "ÃÂ‰‡·ÓÚÌËÍË, Ì‡·Î˛‰‡˛˘ËÂ Á‡ Ô‡ˆËÂÌÚÓÏ '" << patientName << "':" << std::endl;
-    bool found = false;
-    for (const MedicalWorker& w : workers)
-    {
-        if (w.observesPatient(patientName))
-        {
-            std::cout << "- " << w.getName() << " (" << w.getSpecialization().getTitle() << ")" << std::endl;
-            found = true;
-        }
-    }
-    if (!found)
-        std::cout << "ÃÂ‰‡·ÓÚÌËÍÓ‚ ÌÂ Ì‡È‰ÂÌÓ." << std::endl;
-    std::cout << std::endl;
-}
-
-void Hospital::printPatients() const
-{
-    std::cout << "=== œ‡ˆËÂÌÚ˚ ===" << std::endl;
-    for (const Patient& p : patients)
-        std::cout << p.getInfo() << "\n" << std::endl;
-}
-
-void Hospital::printPatientsForWorker(const std::string& workerName) const
-{
-    std::cout << "œ‡ˆËÂÌÚ˚ Û ÏÂ‰‡·ÓÚÌËÍ‡ '" << workerName << "':" << std::endl;
-    bool found = false;
-    for (const Patient& p : patients)
-    {
-        if (p.getDoctorName() == workerName)
-        {
-            std::cout << "- " << p.getName() << " (Ô‡Î‡Ú‡ " << p.getWard().getNumber() << ")" << std::endl;
-            found = true;
-        }
-    }
-    if (!found)
-        std::cout << "œ‡ˆËÂÌÚÓ‚ ÌÂ Ì‡È‰ÂÌÓ." << std::endl;
-    std::cout << std::endl;
-}
-
-void Hospital::printPatientsByWard(const std::string& wardNumber) const
-{
-    std::cout << "œ‡ˆËÂÌÚ˚ ‚ Ô‡Î‡ÚÂ '" << wardNumber << "':" << std::endl;
-    bool found = false;
-    for (const Patient& p : patients)
-    {
-        if (p.getWard().getNumber() == wardNumber)
-        {
-            std::cout << "- " << p.getName() << " (‚‡˜: " << p.getDoctorName() << ")" << std::endl;
-            found = true;
-        }
-    }
-    if (!found)
-        std::cout << "œ‡ˆËÂÌÚÓ‚ ‚ ˝ÚÓÈ Ô‡Î‡ÚÂ ÌÂÚ." << std::endl;
-    std::cout << std::endl;
-}
+    /** –ù–∞—Ö–æ–∂–¥–µ–Ω–∏–µ –ø–∞—Ü–∏–µ–Ω—Ç–æ–≤ –ø–æ –ø–∞–ª–∞—Ç–∞–º */
+    void printPatientsByWard(const std::string &wardNumber) const;
+};
