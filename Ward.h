@@ -3,7 +3,7 @@
 #include <string>
 
 /**
- * @brief Класс Ward - палата
+ * @brief РљР»Р°СЃСЃ Ward - РїР°Р»Р°С‚Р°
  */
 class Ward
 {
@@ -16,3 +16,4 @@ public:
 
     const std::string& getNumber() const noexcept;
 };
+
