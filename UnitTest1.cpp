@@ -44,8 +44,8 @@ namespace HospitalTests
 
         TEST_METHOD(ParameterizedConstructor)
         {
-            Specialization s("Терапевт");
-            Assert::AreEqual(std::string("Терапевт"), s.getTitle());
+            Specialization s("РўРµСЂР°РїРµРІС‚");
+            Assert::AreEqual(std::string("РўРµСЂР°РїРµРІС‚"), s.getTitle());
         }
     };
 
@@ -61,13 +61,13 @@ namespace HospitalTests
 
         TEST_METHOD(GettersAndToString)
         {
-            Observation o("Петров П.П.", "15.10.2023", 5);
-            Assert::AreEqual(std::string("Петров П.П."), o.getPatientName());
+            Observation o("РџРµС‚СЂРѕРІ Рџ.Рџ.", "15.10.2023", 5);
+            Assert::AreEqual(std::string("РџРµС‚СЂРѕРІ Рџ.Рџ."), o.getPatientName());
             Assert::AreEqual(std::string("15.10.2023"), o.getDate());
             Assert::AreEqual(5, o.getDays());
 
             std::string s = o.toString();
-            Assert::IsTrue(s.find("Петров П.П.") != std::string::npos);
+            Assert::IsTrue(s.find("РџРµС‚СЂРѕРІ Рџ.Рџ.") != std::string::npos);
         }
     };
 
@@ -83,14 +83,14 @@ namespace HospitalTests
 
         TEST_METHOD(ConstructorWithExplicitId)
         {
-            Person p("Петров П.П.", 42);
+            Person p("РџРµС‚СЂРѕРІ Рџ.Рџ.", 42);
             Assert::AreEqual(42, p.getId());
-            Assert::AreEqual(std::string("Петров П.П."), p.getName());
+            Assert::AreEqual(std::string("РџРµС‚СЂРѕРІ Рџ.Рџ."), p.getName());
         }
 
         TEST_METHOD(GetInfo)
         {
-            Person p("Сидоров С.С.", 10);
+            Person p("РЎРёРґРѕСЂРѕРІ РЎ.РЎ.", 10);
             std::string info = p.getInfo();
             Assert::IsTrue(info.find("ID: 10") != std::string::npos);
         }
@@ -109,21 +109,21 @@ namespace HospitalTests
 
         TEST_METHOD(ObservedPatientsAndObservesPatient)
         {
-            MedicalWorker w("Иванов И.И.", Specialization("Терапевт"), "Врач");
-            Assert::IsFalse(w.observesPatient("Петров П.П."));
+            MedicalWorker w("РРІР°РЅРѕРІ Р.Р.", Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡");
+            Assert::IsFalse(w.observesPatient("РџРµС‚СЂРѕРІ Рџ.Рџ."));
 
-            w.addObservedPatient("Петров П.П.");
-            w.addObservedPatient("Сидорова А.С.");
+            w.addObservedPatient("РџРµС‚СЂРѕРІ Рџ.Рџ.");
+            w.addObservedPatient("РЎРёРґРѕСЂРѕРІР° Рђ.РЎ.");
 
-            Assert::IsTrue(w.observesPatient("Петров П.П."));
-            Assert::IsFalse(w.observesPatient("Кузнецов Д.А."));
+            Assert::IsTrue(w.observesPatient("РџРµС‚СЂРѕРІ Рџ.Рџ."));
+            Assert::IsFalse(w.observesPatient("РљСѓР·РЅРµС†РѕРІ Р”.Рђ."));
         }
 
         TEST_METHOD(AddAndGetObservations)
         {
-            MedicalWorker w("Иванов И.И.", Specialization("Терапевт"), "Врач");
-            w.addObservation(Observation("Петров П.П.", "15.10.2023", 5));
-            w.addObservation(Observation("Сидорова А.С.", "20.10.2023", 3));
+            MedicalWorker w("РРІР°РЅРѕРІ Р.Р.", Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡");
+            w.addObservation(Observation("РџРµС‚СЂРѕРІ Рџ.Рџ.", "15.10.2023", 5));
+            w.addObservation(Observation("РЎРёРґРѕСЂРѕРІР° Рђ.РЎ.", "20.10.2023", 3));
 
             Assert::AreEqual(size_t(2), w.getObservations().size());
         }
@@ -134,19 +134,19 @@ namespace HospitalTests
     public:
         TEST_METHOD(ParameterizedConstructor)
         {
-            Patient p("Петров П.П.", Ward("101"), "Иванов И.И.");
+            Patient p("РџРµС‚СЂРѕРІ Рџ.Рџ.", Ward("101"), "РРІР°РЅРѕРІ Р.Р.");
             Assert::AreEqual(std::string("101"), p.getWard().getNumber());
-            Assert::AreEqual(std::string("Иванов И.И."), p.getDoctorName());
+            Assert::AreEqual(std::string("РРІР°РЅРѕРІ Р.Р."), p.getDoctorName());
         }
 
         TEST_METHOD(DiagnosesAndHasDiagnosis)
         {
-            Patient p("Петров П.П.", Ward("101"), "Иванов И.И.");
-            Assert::IsFalse(p.hasDiagnosis("Гастрит"));
+            Patient p("РџРµС‚СЂРѕРІ Рџ.Рџ.", Ward("101"), "РРІР°РЅРѕРІ Р.Р.");
+            Assert::IsFalse(p.hasDiagnosis("Р“Р°СЃС‚СЂРёС‚"));
 
-            p.addDiagnosis("Гастрит");
-            Assert::IsTrue(p.hasDiagnosis("Гастрит"));
-            Assert::IsFalse(p.hasDiagnosis("ОРВИ"));
+            p.addDiagnosis("Р“Р°СЃС‚СЂРёС‚");
+            Assert::IsTrue(p.hasDiagnosis("Р“Р°СЃС‚СЂРёС‚"));
+            Assert::IsFalse(p.hasDiagnosis("РћР Р’Р"));
         }
     };
 
@@ -163,9 +163,9 @@ namespace HospitalTests
         TEST_METHOD(DuplicateIdRejectedAcrossLists)
         {
             Hospital h;
-            MedicalWorker w1("Иванов И.И.", Specialization("Терапевт"), "Врач", 100);
-            MedicalWorker w2("Петров П.П.", Specialization("Хирург"), "Врач", 100);
-            Patient pSameId("Сидоров С.С.", Ward("101"), "Иванов И.И.", 100);
+            MedicalWorker w1("РРІР°РЅРѕРІ Р.Р.", Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡", 100);
+            MedicalWorker w2("РџРµС‚СЂРѕРІ Рџ.Рџ.", Specialization("РҐРёСЂСѓСЂРі"), "Р’СЂР°С‡", 100);
+            Patient pSameId("РЎРёРґРѕСЂРѕРІ РЎ.РЎ.", Ward("101"), "РРІР°РЅРѕРІ Р.Р.", 100);
 
             h.addWorker(w1);
             h.addWorker(w2);
@@ -189,11 +189,11 @@ namespace HospitalTests
         {
             Hospital h;
 
-            MedicalWorker w1("Иванов И.И.", Specialization("Терапевт"), "Врач");
-            w1.addObservedPatient("Петров П.П.");
+            MedicalWorker w1("РРІР°РЅРѕРІ Р.Р.", Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡");
+            w1.addObservedPatient("РџРµС‚СЂРѕРІ Рџ.Рџ.");
 
-            MedicalWorker w2("Смирнов О.В.", Specialization("Хирург"), "Врач");
-            w2.addObservedPatient("Сидорова А.С.");
+            MedicalWorker w2("РЎРјРёСЂРЅРѕРІ Рћ.Р’.", Specialization("РҐРёСЂСѓСЂРі"), "Р’СЂР°С‡");
+            w2.addObservedPatient("РЎРёРґРѕСЂРѕРІР° Рђ.РЎ.");
 
             h.addWorker(w1);
             h.addWorker(w2);
@@ -202,20 +202,20 @@ namespace HospitalTests
             std::ostringstream captured;
             std::cout.rdbuf(captured.rdbuf());
 
-            h.printWorkersForPatient("Петров П.П.");
+            h.printWorkersForPatient("РџРµС‚СЂРѕРІ Рџ.Рџ.");
 
             std::cout.rdbuf(oldCout);
             std::string output = captured.str();
 
-            Assert::IsTrue(output.find("Иванов И.И.") != std::string::npos);
-            Assert::IsTrue(output.find("Смирнов О.В.") == std::string::npos);
+            Assert::IsTrue(output.find("РРІР°РЅРѕРІ Р.Р.") != std::string::npos);
+            Assert::IsTrue(output.find("РЎРјРёСЂРЅРѕРІ Рћ.Р’.") == std::string::npos);
         }
 
         TEST_METHOD(PrintPatientsByWardOutput)
         {
             Hospital h;
-            h.addPatient(Patient("Петров П.П.", Ward("101"), "Иванов И.И."));
-            h.addPatient(Patient("Кузнецов Д.А.", Ward("102"), "Смирнов О.В."));
+            h.addPatient(Patient("РџРµС‚СЂРѕРІ Рџ.Рџ.", Ward("101"), "РРІР°РЅРѕРІ Р.Р."));
+            h.addPatient(Patient("РљСѓР·РЅРµС†РѕРІ Р”.Рђ.", Ward("102"), "РЎРјРёСЂРЅРѕРІ Рћ.Р’."));
 
             std::streambuf* oldCout = std::cout.rdbuf();
             std::ostringstream captured;
@@ -226,8 +226,8 @@ namespace HospitalTests
             std::cout.rdbuf(oldCout);
             std::string output = captured.str();
 
-            Assert::IsTrue(output.find("Петров П.П.") != std::string::npos);
-            Assert::IsTrue(output.find("Кузнецов Д.А.") == std::string::npos);
+            Assert::IsTrue(output.find("РџРµС‚СЂРѕРІ Рџ.Рџ.") != std::string::npos);
+            Assert::IsTrue(output.find("РљСѓР·РЅРµС†РѕРІ Р”.Рђ.") == std::string::npos);
         }
     };
 }
