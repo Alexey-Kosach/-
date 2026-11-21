@@ -26,7 +26,7 @@ bool Patient::hasDiagnosis(const std::string& diagnosis) const noexcept
 std::string Patient::getInfo() const
 {
     std::string result = Person::getInfo();
-    result += "\n   Палата: " + ward.getNumber();
-    result += "\n   Лечащий врач: " + doctorName;
+    result += "\n   РџР°Р»Р°С‚Р°: " + ward.getNumber();
+    result += "\n   Р›РµС‡Р°С‰РёР№ РІСЂР°С‡: " + doctorName;
     return result;
 }
