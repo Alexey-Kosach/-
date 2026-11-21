@@ -9,7 +9,7 @@
 #include <string>
 
 /**
- * @brief Класс Hospital - больница
+ * @brief РљР»Р°СЃСЃ Hospital - Р±РѕР»СЊРЅРёС†Р°
  */
 class Hospital
 {
@@ -38,18 +38,18 @@ public:
     const std::vector<Ward> &getWards() const noexcept;
     const std::vector<Specialization> &getSpecializations() const noexcept;
 
-    /** Сведения о медицинских работниках */
+    /** РЎРІРµРґРµРЅРёСЏ Рѕ РјРµРґРёС†РёРЅСЃРєРёС… СЂР°Р±РѕС‚РЅРёРєР°С… */
     void printWorkers() const;
 
-    /** Сведения о медработниках, наблюдающих за пациентом */
+    /** РЎРІРµРґРµРЅРёСЏ Рѕ РјРµРґСЂР°Р±РѕС‚РЅРёРєР°С…, РЅР°Р±Р»СЋРґР°СЋС‰РёС… Р·Р° РїР°С†РёРµРЅС‚РѕРј */
     void printWorkersForPatient(const std::string &patientName) const;
 
-    /** Сведения о пациентах */
+    /** РЎРІРµРґРµРЅРёСЏ Рѕ РїР°С†РёРµРЅС‚Р°С… */
     void printPatients() const;
 
-    /** Сведения о пациентах у определённого медработника */
+    /** РЎРІРµРґРµРЅРёСЏ Рѕ РїР°С†РёРµРЅС‚Р°С… Сѓ РѕРїСЂРµРґРµР»С‘РЅРЅРѕРіРѕ РјРµРґСЂР°Р±РѕС‚РЅРёРєР° */
     void printPatientsForWorker(const std::string &workerName) const;
 
-    /** Нахождение пациентов по палатам */
+    /** РќР°С…РѕР¶РґРµРЅРёРµ РїР°С†РёРµРЅС‚РѕРІ РїРѕ РїР°Р»Р°С‚Р°Рј */
     void printPatientsByWard(const std::string &wardNumber) const;
 };
