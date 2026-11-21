@@ -10,5 +10,5 @@ int Observation::getDays() const noexcept { return days; }
 
 std::string Observation::toString() const
 {
-    return "Пациент: " + patientName + "/ Дата: " + date + "/ Дней: " + std::to_string(days);
+    return "РџР°С†РёРµРЅС‚: " + patientName + "/ Р”Р°С‚Р°: " + date + "/ Р”РЅРµР№: " + std::to_string(days);
 }
