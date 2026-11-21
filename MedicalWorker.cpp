@@ -35,7 +35,7 @@ bool MedicalWorker::observesPatient(const std::string& patientName) const noexce
 std::string MedicalWorker::getInfo() const
 {
     std::string result = Person::getInfo();
-    result += "\n   Специализация: " + specialization.getTitle();
-    result += "\n   Должность: " + position;
+    result += "\n   РЎРїРµС†РёР°Р»РёР·Р°С†РёСЏ: " + specialization.getTitle();
+    result += "\n   Р”РѕР»Р¶РЅРѕСЃС‚СЊ: " + position;
     return result;
 }
