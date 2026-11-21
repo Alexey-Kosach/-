@@ -3,7 +3,7 @@
 #include <string>
 
 /**
- * @brief Класс Specialization - специализация медработника
+ * @brief РљР»Р°СЃСЃ Specialization - СЃРїРµС†РёР°Р»РёР·Р°С†РёСЏ РјРµРґСЂР°Р±РѕС‚РЅРёРєР°
  */
 class Specialization
 {
