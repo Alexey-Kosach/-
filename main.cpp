@@ -16,29 +16,29 @@ int main() {
 
     hospital.addWard(Ward("101"));
     hospital.addWard(Ward("102"));
-    hospital.addSpecialization(Specialization("Терапевт"));
-    hospital.addSpecialization(Specialization("Хирург"));
+    hospital.addSpecialization(Specialization("РўРµСЂР°РїРµРІС‚"));
+    hospital.addSpecialization(Specialization("РҐРёСЂСѓСЂРі"));
 
-    MedicalWorker w1("Иванов Иван Иванович", Specialization("Терапевт"), "Врач-терапевт");
-    w1.addObservedPatient("Петров Пётр Петрович");
-    w1.addObservedPatient("Сидорова Анна Сергеевна");
-    w1.addObservation(Observation("Петров Пётр Петрович", "15.10.2023", 5));
+    MedicalWorker w1("РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡", Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡-С‚РµСЂР°РїРµРІС‚");
+    w1.addObservedPatient("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡");
+    w1.addObservedPatient("РЎРёРґРѕСЂРѕРІР° РђРЅРЅР° РЎРµСЂРіРµРµРІРЅР°");
+    w1.addObservation(Observation("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡", "15.10.2023", 5));
 
-    MedicalWorker w2("Смирнов Олег Викторович", Specialization("Хирург"), "Врач-хирург");
-    w2.addObservedPatient("Петров Пётр Петрович");
-    w2.addObservation(Observation("Петров Пётр Петрович", "20.10.2023", 3));
+    MedicalWorker w2("РЎРјРёСЂРЅРѕРІ РћР»РµРі Р’РёРєС‚РѕСЂРѕРІРёС‡", Specialization("РҐРёСЂСѓСЂРі"), "Р’СЂР°С‡-С…РёСЂСѓСЂРі");
+    w2.addObservedPatient("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡");
+    w2.addObservation(Observation("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡", "20.10.2023", 3));
 
     hospital.addWorker(w1);
     hospital.addWorker(w2);
 
-    Patient p1("Петров Пётр Петрович", Ward("101"), "Иванов Иван Иванович");
-    p1.addDiagnosis("Гастрит");
+    Patient p1("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡", Ward("101"), "РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡");
+    p1.addDiagnosis("Р“Р°СЃС‚СЂРёС‚");
 
-    Patient p2("Сидорова Анна Сергеевна", Ward("101"), "Иванов Иван Иванович");
-    p2.addDiagnosis("ОРВИ");
+    Patient p2("РЎРёРґРѕСЂРѕРІР° РђРЅРЅР° РЎРµСЂРіРµРµРІРЅР°", Ward("101"), "РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡");
+    p2.addDiagnosis("РћР Р’Р");
 
-    Patient p3("Кузнецов Дмитрий Андреевич", Ward("102"), "Смирнов Олег Викторович");
-    p3.addDiagnosis("Перелом");
+    Patient p3("РљСѓР·РЅРµС†РѕРІ Р”РјРёС‚СЂРёР№ РђРЅРґСЂРµРµРІРёС‡", Ward("102"), "РЎРјРёСЂРЅРѕРІ РћР»РµРі Р’РёРєС‚РѕСЂРѕРІРёС‡");
+    p3.addDiagnosis("РџРµСЂРµР»РѕРј");
 
     hospital.addPatient(p1);
     hospital.addPatient(p2);
@@ -46,19 +46,19 @@ int main() {
 
     hospital.printWorkers();
     hospital.printPatients();
-    hospital.printWorkersForPatient("Петров Пётр Петрович");
-    hospital.printPatientsForWorker("Иванов Иван Иванович");
+    hospital.printWorkersForPatient("РџРµС‚СЂРѕРІ РџС‘С‚СЂ РџРµС‚СЂРѕРІРёС‡");
+    hospital.printPatientsForWorker("РРІР°РЅРѕРІ РРІР°РЅ РРІР°РЅРѕРІРёС‡");
     hospital.printPatientsByWard("101");
 
-    Person basePerson("Базовый человек", 999);
-    MedicalWorker derivedWorker("Алексеев Алексей Алексеевич",
-        Specialization("Терапевт"), "Врач", 1000);
+    Person basePerson("Р‘Р°Р·РѕРІС‹Р№ С‡РµР»РѕРІРµРє", 999);
+    MedicalWorker derivedWorker("РђР»РµРєСЃРµРµРІ РђР»РµРєСЃРµР№ РђР»РµРєСЃРµРµРІРёС‡",
+        Specialization("РўРµСЂР°РїРµРІС‚"), "Р’СЂР°С‡", 1000);
 
     std::vector<std::reference_wrapper<const Person>> baseCollection;
     baseCollection.push_back(std::cref(basePerson));
     baseCollection.push_back(std::cref(derivedWorker));
 
-    std::cout << "\n=== Коллекция базового типа ===" << std::endl;
+    std::cout << "\n=== РљРѕР»Р»РµРєС†РёСЏ Р±Р°Р·РѕРІРѕРіРѕ С‚РёРїР° ===" << std::endl;
     for (const Person& item : baseCollection)
         std::cout << item.getInfo() << "\n" << std::endl;
 
