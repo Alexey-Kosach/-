@@ -6,7 +6,7 @@
 #include <vector>
 
 /**
- * @brief Класс MedicalWorker - медицинский работник (наследник Person)
+ * @brief РљР»Р°СЃСЃ MedicalWorker - РјРµРґРёС†РёРЅСЃРєРёР№ СЂР°Р±РѕС‚РЅРёРє
  */
 class MedicalWorker : public Person
 {
